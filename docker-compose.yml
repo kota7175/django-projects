@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  django:
+    restart: always
+    build: ./django
+    expose:
+      - "3031"
+    depends_on:
+      - postgres
+    command: >
+      bash -c "python manage.py migrate && 
+      gunicorn my_project.wsgi -b 0.0.0.0:3031"
+    volumes:
+      - "./static:/opt/static/"
+      - "staticdata:/opt/static/"
+      - "./django:/opt/apps/"
+  nginx:
+    restart: always
+    image: nginx
+    depends_on:
+      - django
+    ports:
+      - "80:80"
+    volumes:
+      - "./nginx/:/etc/nginx/"
+      - "./static:/opt/apps/static/"
+      - "staticdata:/opt/apps/static/"
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_PASSWORD: usui_db_pass
+
+volumes:
+  dbdata:
+  staticdata:
