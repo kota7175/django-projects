@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %}
+
+    {% block body %}
+        <div class="page-header">
+            <h1><a href="/">Django Girls Blog</a></h1>
+        </div>
+
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="post">
+                        <h2><a href="">{{ post.title }}</a></h2>
+                        <p>{{ post.text|linebreaksbr }}</p>
+                        <div class="date">
+                            {% if post.is_published %}
+                                <p>published: {{ post.published_date }}</p>
+                            {% else %}
+                                <p>published: not published</p>
+                            {% endif %}
+                            <p>created: {{ post.created_date }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <a href="{% url 'blog:edit' post.id %}">edit</a>
+        {% if post.is_published %}
+            <a href="{% url 'blog:unpublishing' post.id %}">unpublish!!</a>
+        {% else %}
+            <a href="{% url 'blog:publishing' post.id %}">publish!!</a>
+        {% endif %}
+        
+    {% endblock %}

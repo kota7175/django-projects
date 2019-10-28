@@ -1,14 +1,37 @@
 {% extends "blog/base.html" %}
 
     {% block body %}
-        <div>
+        <div class="page-header">
             <h1><a href="/">Django Girls Blog</a></h1>
         </div>
+
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% for post in posts %}
+                        <div class="post">
+                            <h2><a href="">{{ post.title }}</a></h2>
+                            <p>{{ post.text|linebreaksbr }}</p>
+                            <div class="date">
+                                {% if post.is_published %}
+                                    <p>published: {{ post.published_date }}</p>
+                                {% else %}
+                                    <p>published: not published</p>
+                                {% endif %}
+                                <p>created: {{ post.created_date }}</p>
+                            </div>
+                            <a href="{% url 'blog:detail' post.id %}">show detail</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
         <div id="skill" class="jumbotron">
             <h2 class="text-center">Articles</h2>
-            {% if blogs %}
+            {% if posts %}
                 <div class="d-flex flex-row">
-                    {% for blog in blogs %}
+                    {% for blog in posts %}
                         <div class="card mx-auto" style="width:15rem;">
                             <div class="card-body">
                                 <h2><a href="">{{ blog.title }}</a></h2>
