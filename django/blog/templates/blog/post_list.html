@@ -6,6 +6,7 @@
         </div>
 
         <div class="content container">
+            {% if posts %}
             <div class="row">
                 <div class="col-md-8">
                     {% for post in posts %}
@@ -25,31 +26,8 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
-
-        <div id="skill" class="jumbotron">
-            <h2 class="text-center">Articles</h2>
-            {% if posts %}
-                <div class="d-flex flex-row">
-                    {% for blog in posts %}
-                        <div class="card mx-auto" style="width:15rem;">
-                            <div class="card-body">
-                                <h2><a href="">{{ blog.title }}</a></h2>
-                                <p>created: {{ blog.created_date }}</p>
-                                {% if blog.is_published %}
-                                    <p>published: {{ blog.published_date }}</p>
-                                    <a href="{% url 'blog:unpublishing' blog.id %}">unpublish!!</a>
-                                {% else %}
-                                    <a href="{% url 'blog:publishing' blog.id %}">publish!!</a>
-                                {% endif %}
-                                <p>{{ blog.text }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
             {% else %}
-            <p>No articles.</p>
+                <p>No articles.</p>
             {% endif %}
-        </div>
-
-        
+        </div>        
     {% endblock %}

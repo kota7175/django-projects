@@ -24,10 +24,13 @@
             </div>
         </div>
             <a href="{% url 'blog:edit' post.id %}">edit</a>
+
         {% if post.is_published %}
             <a href="{% url 'blog:unpublishing' post.id %}">unpublish!!</a>
         {% else %}
             <a href="{% url 'blog:publishing' post.id %}">publish!!</a>
         {% endif %}
-        
+
+        <a href="{% url 'blog:post_remove' blog_id=post.id %}">remove</a>
+                
     {% endblock %}

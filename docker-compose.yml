@@ -12,7 +12,6 @@ services:
       gunicorn my_project.wsgi -b 0.0.0.0:3031"
     volumes:
       - "./static:/opt/static/"
-      - "staticdata:/opt/static/"
       - "./django:/opt/apps/"
   nginx:
     restart: always
@@ -24,7 +23,6 @@ services:
     volumes:
       - "./nginx/:/etc/nginx/"
       - "./static:/opt/apps/static/"
-      - "staticdata:/opt/apps/static/"
   postgres:
     image: postgres
     ports:

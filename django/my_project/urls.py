@@ -15,11 +15,23 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.contrib.auth import views
 from django.urls import include, path
+from . import settings
+
 
 urlpatterns = [
     path('', include('blog.urls')),
+    path('girlsblog/', include('blog.urls')),
     path('homepages/', include('homepages.urls')),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/login/', views.LoginView.as_view(), name='login'),
+    path('accounts/logout/', views.LogoutView.as_view(next_page='/'), name='logout'),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path("__debug__/", include(debug_toolbar.urls)),
+    ] + urlpatterns

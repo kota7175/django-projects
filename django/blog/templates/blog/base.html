@@ -35,22 +35,28 @@
       </button>
       <a class="navbar-brand" href="#">Django Girls Blog</a>
       <div class="collapse navbar-collapse justify-content-center">
-        <!--<ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#profile">PROFILE</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#skill">SKILLS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contact-form">CONTACT</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#twitter">TWITTER</a>
-          </li>
-        </ul>-->
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog:post_list' %}">Articles</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog:post_new' %}">New Article</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog:post_draft_list' %}">Draft Article</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+          {% endif %}
+        </ul>
       </div>
-      <p class="navbar-nav justify-content-end text-white">KOTA USUI</p>
+      {% if user.is_authenticated %}
+        <p class="navbar-nav justify-content-end text-white">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+
+       {% endif %} 
     </nav>
     <main class="container">
 
