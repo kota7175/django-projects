@@ -22,15 +22,38 @@
                     </div>
                 </div>
             </div>
+            <div class='row'>
+                <a href="{% url 'blog:edit' post.id %}">edit</a>
+
+                {% if post.is_published %}
+                    <a href="{% url 'blog:unpublishing' post.id %}">unpublish!! </a>
+                {% else %}
+                    <a href="{% url 'blog:publishing' post.id %}">publish!! </a>
+                {% endif %}
+
+                <a href="{% url 'blog:post_remove' blog_id=post.id %}">remove </a>
+            </div>
+            <div class='row'>
+                <hr>
+                <a class="btn btn-default" href="{% url 'blog:add_comment_to_post' blog_id=post.pk %}">Add comment</a>
+                {% for comment in post.comments.all %}
+                    {% if user.is_authenticated or comment.approved_comment %}
+                    <div class="comment">
+                        <div class="date">
+                            {{ comment.created_date }}
+                            {% if not comment.approved_comment %}
+                                <a class="btn btn-default" href="{% url 'blog:comment_remove' blog_id=comment.pk %}">remove comment</a>
+                                <a class="btn btn-default" href="{% url 'blog:comment_approve' blog_id=comment.pk %}">appvove comment</a>
+                            {% endif %}
+                        </div>
+                        <strong>{{ comment.author }}</strong>
+                        <p>{{ comment.text|linebreaks }}</p>
+                    </div>
+                    {% endif %}
+                {% empty %}
+                    <p>No comments here yet :(</p>
+                {% endfor %}
+            </div>
         </div>
-            <a href="{% url 'blog:edit' post.id %}">edit</a>
-
-        {% if post.is_published %}
-            <a href="{% url 'blog:unpublishing' post.id %}">unpublish!!</a>
-        {% else %}
-            <a href="{% url 'blog:publishing' post.id %}">publish!!</a>
-        {% endif %}
-
-        <a href="{% url 'blog:post_remove' blog_id=post.id %}">remove</a>
                 
     {% endblock %}

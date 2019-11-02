@@ -21,6 +21,7 @@
                                 {% endif %}
                                 <p>created: {{ post.created_date }}</p>
                             </div>
+                            <p>Comments: {{ post.approved_comments.count }}</p>
                             <a href="{% url 'blog:detail' post.id %}">show detail</a>
                         </div>
                     {% endfor %}
